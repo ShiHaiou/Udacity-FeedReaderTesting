@@ -24,21 +24,22 @@ $(function() {
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有链接字段而且链接不是空的。
          */
-        it('the URL of every object in it is defined', function() {
+        function sameDetection(string) {
             allFeeds.forEach(function(feed) {
-                expect(feed.url).toBeDefined();
-                expect(feed.url).not.toBeNull();
+                expect(feed[string]).toBeDefined();
+                expect(feed[string]).not.toBeNull();
             });
+        }
+
+        it('the URL of every object in it is defined', function() {
+            sameDetection("url");
         });
 
         /* TODO:
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有名字字段而且不是空的。
          */
         it('the name of every object in it is defined', function() {
-            allFeeds.forEach(function(feed) {
-                expect(feed.name).toBeDefined();
-                expect(feed.name).not.toBeNull();
-            });
+            sameDetection("name");
         });
     });
 
@@ -84,9 +85,7 @@ $(function() {
     /* TODO: 13. 写一个叫做 "Initial Entries" 的测试用例 */
     describe('Initial Entries', function() {
         beforeEach(function(done) {
-            loadFeed(1,function() {
-                done();
-            });
+            loadFeed(1, done);
         }, 10000);
 
         /* TODO:
@@ -106,7 +105,7 @@ $(function() {
         var $feed_before;
         var $feed_after;
 
-        beforeEach(function(done) {
+        /*beforeEach(function(done) {
             loadFeed(2,function() {
                 $feed_before = $(".entry");
                 done();
@@ -118,7 +117,17 @@ $(function() {
                 $feed_after = $(".entry");
                 done();
             });
-        }, 15000);
+        }, 15000);*/
+        beforeEach(function(done) {
+            loadFeed(2, function() {
+                $feed_before = $(".entry");
+                done();
+                loadFeed(3, function() {
+                    $feed_after = $(".entry");
+                    done();
+                });
+            });
+        }, 10000);
 
         /* TODO:
          * 写一个测试保证当用 loadFeed 函数加载一个新源的时候内容会真的改变。
