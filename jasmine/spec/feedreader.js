@@ -105,25 +105,14 @@ $(function() {
         var $feed_before;
         var $feed_after;
 
-        /*beforeEach(function(done) {
-            loadFeed(2,function() {
-                $feed_before = $(".entry");
-                done();
-            });
-        }, 10000);
-
-        beforeEach(function(done) {
-            loadFeed(3,function() {
-                $feed_after = $(".entry");
-                done();
-            });
-        }, 15000);*/
         beforeEach(function(done) {
             loadFeed(2, function() {
                 $feed_before = $(".entry");
-                done();
+                //console.log("第一次请求");
+
                 loadFeed(3, function() {
                     $feed_after = $(".entry");
+                    //console.log("第二次请求");
                     done();
                 });
             });
@@ -134,6 +123,7 @@ $(function() {
          * 记住，loadFeed() 函数是异步的。
          */
         it("changes when select a new feed", function() {
+            //console.log("触发");
             expect($feed_before).not.toEqual($feed_after);
         });
     });
